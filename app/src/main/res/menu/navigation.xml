@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/Home_page"
+        android:title="Home Page"/>
+    <item android:id="@+id/change_email_button"
+        android:title="@string/change_email" />
+
+    <item android:id="@+id/change_password_button"
+        android:title="@string/change_password" />
+
+    <item android:id="@+id/sending_pass_reset_button"
+        android:title="@string/send_password_reset_email" />
+
+    <item android:id="@+id/remove_user_button"
+        android:title="@string/remove_user" />
+
+    <item android:id="@+id/sign_out"
+        android:title="@string/btn_sign_out" />
+    </menu>
