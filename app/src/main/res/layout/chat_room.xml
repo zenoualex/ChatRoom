@@ -39,14 +39,4 @@
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:id="@+id/textView" />
     </ScrollView>
-
-    <Button
-        android:id="@+id/button2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:text="Button"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginBottom="7dp" />
 </RelativeLayout>

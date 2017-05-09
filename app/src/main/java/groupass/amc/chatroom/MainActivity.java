@@ -27,7 +27,6 @@ import groupass.amc.chatroom.auth.SignupActivity;
 import groupass.amc.chatroom.auth.LoginActivity;
 import layout.ChangeEmail;
 import layout.ChangePassword;
-import layout.Home_page;
 import layout.ResetPassword;
 
 
@@ -82,9 +81,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         //creating fragment object
         Fragment fragment = null;
-
+        Intent intent;
         //initializing the fragment object which is selected
         switch (itemId) {
+
+            case R.id.Home_page:
+                intent = new Intent(this, ChatRoom.class);
+                startActivity(intent);
+                finish();
+                break;
                 case R.id.change_email_button:
                     fragment = new ChangeEmail();
                     break;
@@ -117,8 +122,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 case R.id.sign_out:
                     signOut();
                     break;
-                default:
-                    fragment = new Home_page();
+
             }
         if (fragment != null) {
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
