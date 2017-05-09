@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "435050778225-4q7bohfi890glhgsno3m8822l3i5qfdm.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "groupass.amc.chatroom",
+            "certificate_hash": "51f612a13367ac706f4aa769307ac71d23a3973c"
+          }
+        },
+        {
           "client_id": "435050778225-03mn3utc96fma6k2meod7fehelp3v0m7.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
