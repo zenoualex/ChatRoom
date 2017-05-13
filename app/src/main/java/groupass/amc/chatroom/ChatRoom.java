@@ -8,6 +8,8 @@ package groupass.amc.chatroom;
         import android.widget.EditText;
         import android.widget.TextView;
 
+        import com.google.firebase.auth.FirebaseAuth;
+        import com.google.firebase.auth.FirebaseUser;
         import com.google.firebase.database.ChildEventListener;
         import com.google.firebase.database.DataSnapshot;
         import com.google.firebase.database.DatabaseError;
@@ -39,7 +41,9 @@ package groupass.amc.chatroom;
         input_msg = (EditText) findViewById(R.id.msg_input);
         chat_conversation = (TextView) findViewById(R.id.textView);
 
-
+        room_name = ("Frog Chat");
+        user_name = FirebaseAuth.getInstance().getCurrentUser().getEmail().toString();
+        setTitle(" Room - "+room_name);
         root = FirebaseDatabase.getInstance().getReference().child(room_name);
 
         btn_send_msg.setOnClickListener(new View.OnClickListener() {

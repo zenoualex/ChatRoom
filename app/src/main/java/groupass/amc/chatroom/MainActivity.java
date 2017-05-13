@@ -12,8 +12,6 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 
 
@@ -33,7 +31,6 @@ import layout.ResetPassword;
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener  {
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mToggle;
-    private ProgressBar progressBar;
     private FirebaseAuth.AuthStateListener authListener;
     private FirebaseAuth auth;
     private NavigationView nvDrawer;
@@ -54,11 +51,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navigationView.setNavigationItemSelectedListener(this);
         //get firebase auth instance
         auth = FirebaseAuth.getInstance();
-        progressBar = (ProgressBar) findViewById(R.id.progressBar);
-        //get current user
-        if (progressBar != null) {
-            progressBar.setVisibility(View.GONE);
-        }
         final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
         authListener = new FirebaseAuth.AuthStateListener() {
@@ -85,8 +77,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         //initializing the fragment object which is selected
         switch (itemId) {
 
-            case R.id.Home_page:
-                intent = new Intent(this, ChatRoom.class);
+            case R.id.Add_room:
+                intent = new Intent(this, AddRoom.class);
                 startActivity(intent);
                 finish();
                 break;
@@ -100,7 +92,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     fragment = new ResetPassword();
                     break;
                 case R.id.remove_user_button:
-                    progressBar.setVisibility(View.VISIBLE);
                     if (user != null) {
                         user.delete()
                                 .addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -110,10 +101,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                                             Toast.makeText(MainActivity.this, "Your profile is deleted:( Create a account now!", Toast.LENGTH_SHORT).show();
                                             startActivity(new Intent(MainActivity.this, SignupActivity.class));
                                             finish();
-                                            progressBar.setVisibility(View.GONE);
                                         } else {
                                             Toast.makeText(MainActivity.this, "Failed to delete your account!", Toast.LENGTH_SHORT).show();
-                                            progressBar.setVisibility(View.GONE);
                                         }
                                     }
                                 });
@@ -160,7 +149,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     protected void onResume() {
         super.onResume();
-        progressBar.setVisibility(View.GONE);
     }
 
     @Override
