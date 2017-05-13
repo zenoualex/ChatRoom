@@ -29,7 +29,7 @@ import java.util.Set;
 
 public class AddRoom extends AppCompatActivity {
 
-    private Button  add_room;
+    private Button add_room;
     private EditText room_name;
 
     private ListView listView;
@@ -45,9 +45,9 @@ public class AddRoom extends AppCompatActivity {
 
         add_room = (Button) findViewById(R.id.btn_add_room);
         room_name = (EditText) findViewById(R.id.room_name_edittext);
-        listView  = (ListView) findViewById(R.id.listView);
+        listView = (ListView) findViewById(R.id.listView);
 
-        arrayAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,list_of_rooms);
+        arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, list_of_rooms);
 
         listView.setAdapter(arrayAdapter);
 
@@ -57,8 +57,8 @@ public class AddRoom extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                Map<String,Object> map = new HashMap<String, Object>();
-                map.put(room_name.getText().toString(),"");
+                Map<String, Object> map = new HashMap<String, Object>();
+                map.put(room_name.getText().toString(), "");
                 root.updateChildren(map);
 
             }
@@ -71,8 +71,8 @@ public class AddRoom extends AppCompatActivity {
                 Set<String> set = new HashSet<String>();
                 Iterator i = dataSnapshot.getChildren().iterator();
 
-                while (i.hasNext()){
-                    set.add(((DataSnapshot)i.next()).getKey());
+                while (i.hasNext()) {
+                    set.add(((DataSnapshot) i.next()).getKey());
                 }
 
                 list_of_rooms.clear();
@@ -91,10 +91,11 @@ public class AddRoom extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
-                Intent intent = new Intent(getApplicationContext(),ChatRoom.class);
-                intent.putExtra("room_name",((TextView)view).getText().toString() );
-                intent.putExtra("user_name",name);
+                Intent intent = new Intent(getApplicationContext(), ChatRoom.class);
+                intent.putExtra("room_name", ((TextView) view).getText().toString());
+                intent.putExtra("user_name", name);
                 startActivity(intent);
+
             }
         });
 

@@ -16,23 +16,29 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_toLeftOf="@+id/btn_add_room"
-        android:layout_toStartOf="@+id/btn_add_room" />
+        android:layout_toStartOf="@+id/btn_add_room"
+        android:textColor="#000000"/>
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Add room"
         android:id="@+id/btn_add_room"
+        android:background="@drawable/shapeinside"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true"
+        android:textColor="@color/white"
+        android:clickable="true"/>
 
     <ListView
+        android:id="@+id/listView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/listView"
-        android:layout_alignParentTop="true"
+        android:layout_above="@+id/room_name_edittext"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_above="@+id/room_name_edittext" />
+        android:layout_alignParentTop="true"
+        android:contextClickable="true"
+        android:textColor="?android:attr/colorForeground" />
 </RelativeLayout>
