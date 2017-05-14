@@ -1,37 +1,36 @@
 package groupass.amc.chatroom;
 
-        import android.os.Bundle;
-        import android.support.annotation.Nullable;
-        import android.support.v7.app.AppCompatActivity;
-        import android.view.View;
-        import android.widget.Button;
-        import android.widget.EditText;
-        import android.widget.TextView;
+import android.graphics.Color;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 
-        import com.google.firebase.auth.FirebaseAuth;
-        import com.google.firebase.auth.FirebaseUser;
-        import com.google.firebase.database.ChildEventListener;
-        import com.google.firebase.database.DataSnapshot;
-        import com.google.firebase.database.DatabaseError;
-        import com.google.firebase.database.DatabaseReference;
-        import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
-        import java.util.HashMap;
-        import java.util.Iterator;
-        import java.util.Map;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
-/**
- * Created by filipp on 6/28/2016.
- */
-    public class ChatRoom  extends AppCompatActivity{
 
-    private Button btn_send_msg;
+public class ChatRoom  extends AppCompatActivity{
+
+    private Button btn_send_msg, contactLi;
     private EditText input_msg;
     private TextView chat_conversation;
     private String user_name,room_name;
     private DatabaseReference root ;
     private String temp_key;
-
+    final MainActivity ad = new MainActivity();
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,11 +40,11 @@ package groupass.amc.chatroom;
         input_msg = (EditText) findViewById(R.id.msg_input);
         chat_conversation = (TextView) findViewById(R.id.textView);
 
-        room_name = ("Frog Chat");
-        user_name = FirebaseAuth.getInstance().getCurrentUser().getEmail().toString();
+
+
+        room_name = getIntent().getExtras().get("room_name").toString();
         setTitle(" Room - "+room_name);
         root = FirebaseDatabase.getInstance().getReference().child(room_name);
-
         btn_send_msg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -56,10 +55,11 @@ package groupass.amc.chatroom;
 
                 DatabaseReference message_root = root.child(temp_key);
                 Map<String,Object> map2 = new HashMap<String, Object>();
-                map2.put("name",user_name);
+                map2.put("name", ad.showName());
                 map2.put("msg",input_msg.getText().toString());
 
                 message_root.updateChildren(map2);
+                input_msg.getText().clear();
             }
         });
 
@@ -102,10 +102,9 @@ package groupass.amc.chatroom;
         Iterator i = dataSnapshot.getChildren().iterator();
 
         while (i.hasNext()){
-
+            if (ad.showName() == ad.showName())
             chat_msg = (String) ((DataSnapshot)i.next()).getValue();
             chat_user_name = (String) ((DataSnapshot)i.next()).getValue();
-
             chat_conversation.append(chat_user_name +" : "+chat_msg +" \n");
         }
 
