@@ -44,6 +44,25 @@
         android:layout_toRightOf="@+id/longitude"
         android:textSize="16sp"/>
 
+    <Button
+        android:id="@+id/updateme"
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Update Me"
+        android:layout_below="@+id/longitude"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="135dp" />
+
+    <Button
+        android:id="@+id/copy"
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Copy to Clipboard"
+        android:layout_centerVertical="true"
+        android:layout_alignStart="@+id/updateme"
+        android:layout_alignEnd="@+id/updateme" />
 
 
 </RelativeLayout>

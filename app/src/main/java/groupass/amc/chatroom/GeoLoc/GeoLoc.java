@@ -5,6 +5,8 @@ package groupass.amc.chatroom.GeoLoc;
  */
 
 import android.Manifest;
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -14,9 +16,12 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,6 +30,7 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.model.LatLng;
+
 
 import groupass.amc.chatroom.R;
 
@@ -37,7 +43,7 @@ public class GeoLoc extends AppCompatActivity implements GoogleApiClient.Connect
     private GoogleApiClient mGoogleApiClient;
     private Location mLocation;
     private LocationManager mLocationManager;
-
+    private Button Updateme, copy;
     private LocationRequest mLocationRequest;
     private com.google.android.gms.location.LocationListener listener;
     private long UPDATE_INTERVAL = 2 * 1000;  /* 10 secs */
@@ -48,10 +54,11 @@ public class GeoLoc extends AppCompatActivity implements GoogleApiClient.Connect
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.geo_loc);
-
+        ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
         mLatitudeTextView = (TextView) findViewById((R.id.latitude_textview));
         mLongitudeTextView = (TextView) findViewById((R.id.longitude_textview));
-
+        Updateme = (Button) findViewById(R.id.updateme);
+        copy = (Button) findViewById(R.id.copy);
         mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .addConnectionCallbacks(this)
                 .addOnConnectionFailedListener(this)
@@ -60,7 +67,28 @@ public class GeoLoc extends AppCompatActivity implements GoogleApiClient.Connect
 
         mLocationManager = (LocationManager)this.getSystemService(Context.LOCATION_SERVICE);
 
-        checkLocation(); //check whether location service is enable or not in your  phone
+            Updateme.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startLocationUpdates();
+
+            }
+        });
+
+        copy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String Copy1 = mLatitudeTextView.getText().toString();
+                String Copy2 = mLongitudeTextView.getText().toString();
+                String Copy3 = ("My Location is: "+"Latitude: "+Copy1+","+" Longitude: "+Copy2);
+                ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+                ClipData clip = ClipData.newPlainText("Copied", Copy3);
+                clipboard.setPrimaryClip(clip);
+                Toast.makeText(getApplicationContext(), "Frog Chat: Cordinates Copied!",
+                        Toast.LENGTH_SHORT).show();
+
+            }
+        });
     }
 
     @Override
@@ -154,40 +182,12 @@ public class GeoLoc extends AppCompatActivity implements GoogleApiClient.Connect
         LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
     }
 
-    private boolean checkLocation() {
-        if(!isLocationEnabled())
-            showAlert();
-        return isLocationEnabled();
+
+    public boolean checkLocationPermission()
+    {
+        String permission = "android.permission.ACCESS_FINE_LOCATION";
+        int res = this.checkCallingOrSelfPermission(permission);
+        return (res == PackageManager.PERMISSION_GRANTED);
     }
-
-    private void showAlert() {
-        final AlertDialog.Builder dialog = new AlertDialog.Builder(this);
-        dialog.setTitle("Enable Location")
-                .setMessage("Your Locations Settings is set to 'Off'.\nPlease Enable Location to " +
-                        "use this app")
-                .setPositiveButton("Location Settings", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface paramDialogInterface, int paramInt) {
-
-                        Intent myIntent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-                        startActivity(myIntent);
-                    }
-                })
-                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface paramDialogInterface, int paramInt) {
-
-                    }
-                });
-        dialog.show();
-    }
-
-    private boolean isLocationEnabled() {
-        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) ||
-                locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
-    }
-
-
 
 }

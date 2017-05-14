@@ -182,16 +182,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     public void request_user_name() {
         if (name == null) {
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            final AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setTitle("Enter name your Nickname:");
-
             final EditText input_field = new EditText(this);
-
             builder.setView(input_field);
             builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
-                    name = input_field.getText().toString();
+                    if (input_field.getText() == null){
+                        return;
+                    } else {
+                        name = input_field.getText().toString();
+                    }
                 }
             });
             builder.show();
