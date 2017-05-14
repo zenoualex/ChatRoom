@@ -1,5 +1,6 @@
 package groupass.amc.chatroom;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -9,10 +10,11 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
-import android.widget.ImageView;
+import android.widget.EditText;
 import android.widget.Toast;
 
 
@@ -22,13 +24,13 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+
+import groupass.amc.chatroom.GeoLoc.GeoLoc;
 import groupass.amc.chatroom.auth.SignupActivity;
 import groupass.amc.chatroom.auth.LoginActivity;
 import layout.ChangeEmail;
 import layout.ChangePassword;
 import layout.ResetPassword;
-
-import static groupass.amc.chatroom.R.layout.activity_main;
 
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener  {
@@ -36,13 +38,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private ActionBarDrawerToggle mToggle;
     private FirebaseAuth.AuthStateListener authListener;
     private FirebaseAuth auth;
+    public static String name;
     private NavigationView nvDrawer;
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(activity_main);
+        setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle(getString(R.string.app_name));
         setSupportActionBar(toolbar);
@@ -54,6 +55,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         NavigationView navigationView = (NavigationView) findViewById(R.id.nvView);
         navigationView.setNavigationItemSelectedListener(this);
+        request_user_name();
         //get firebase auth instance
         auth = FirebaseAuth.getInstance();
         final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
@@ -79,12 +81,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         //creating fragment object
         Fragment fragment = null;
         Intent intent;
+        Intent intent2;
         //initializing the fragment object which is selected
         switch (itemId) {
 
             case R.id.Add_room:
                 intent = new Intent(this, AddRoom.class);
                 startActivity(intent);
+                finish();
+                break;
+            case R.id.geo_loc:
+                intent2 = new Intent(this, GeoLoc.class);
+                startActivity(intent2);
                 finish();
                 break;
                 case R.id.change_email_button:
@@ -115,6 +123,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     break;
                 case R.id.sign_out:
                     signOut();
+                    name = null;
                     break;
 
             }
@@ -169,6 +178,32 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             auth.removeAuthStateListener(authListener);
         }
 
+    }
+
+    public void request_user_name() {
+        if (name == null) {
+            final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle("Enter name your Nickname:");
+            final EditText input_field = new EditText(this);
+            builder.setView(input_field);
+            builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    if (input_field.getText() == null){
+                        return;
+                    } else {
+                        name = input_field.getText().toString();
+                    }
+                }
+            });
+            builder.show();
+        }
+        else
+            return;
+    }
+
+    public String showName(){
+        return name;
     }
 
 }
