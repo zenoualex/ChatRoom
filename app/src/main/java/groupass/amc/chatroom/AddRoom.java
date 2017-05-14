@@ -35,7 +35,6 @@ public class AddRoom extends AppCompatActivity {
     private ListView listView;
     private ArrayAdapter<String> arrayAdapter;
     private ArrayList<String> list_of_rooms = new ArrayList<>();
-    private String name;
     private DatabaseReference root = FirebaseDatabase.getInstance().getReference().getRoot();
 
     @Override
@@ -51,7 +50,7 @@ public class AddRoom extends AppCompatActivity {
 
         listView.setAdapter(arrayAdapter);
 
-        request_user_name();
+
 
         add_room.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -93,38 +92,9 @@ public class AddRoom extends AppCompatActivity {
 
                 Intent intent = new Intent(getApplicationContext(), ChatRoom.class);
                 intent.putExtra("room_name", ((TextView) view).getText().toString());
-                intent.putExtra("user_name", name);
                 startActivity(intent);
-
             }
         });
 
     }
-
-    private void request_user_name() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Enter name:");
-
-        final EditText input_field = new EditText(this);
-
-        builder.setView(input_field);
-        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                name = input_field.getText().toString();
-            }
-        });
-
-        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                dialogInterface.cancel();
-                request_user_name();
-            }
-        });
-
-        builder.show();
-    }
-
-
 }
