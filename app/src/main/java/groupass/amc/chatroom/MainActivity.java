@@ -24,6 +24,8 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+
+import groupass.amc.chatroom.GeoLoc.GeoLoc;
 import groupass.amc.chatroom.auth.SignupActivity;
 import groupass.amc.chatroom.auth.LoginActivity;
 import layout.ChangeEmail;
@@ -79,12 +81,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         //creating fragment object
         Fragment fragment = null;
         Intent intent;
+        Intent intent2;
         //initializing the fragment object which is selected
         switch (itemId) {
 
             case R.id.Add_room:
                 intent = new Intent(this, AddRoom.class);
                 startActivity(intent);
+                finish();
+                break;
+            case R.id.geo_loc:
+                intent2 = new Intent(this, GeoLoc.class);
+                startActivity(intent2);
                 finish();
                 break;
                 case R.id.change_email_button:

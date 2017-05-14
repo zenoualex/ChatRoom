@@ -1,5 +1,6 @@
 package groupass.amc.chatroom;
 
+import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -20,6 +21,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import android.os.Vibrator; // New Import for Vibration
 
 
 public class ChatRoom  extends AppCompatActivity{
@@ -30,6 +32,7 @@ public class ChatRoom  extends AppCompatActivity{
     private String user_name,room_name;
     private DatabaseReference root ;
     private String temp_key;
+    private Vibrator mVibrator; // Variable Declare
     final MainActivity ad = new MainActivity();
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -98,14 +101,17 @@ public class ChatRoom  extends AppCompatActivity{
     private String chat_msg,chat_user_name;
 
     private void append_chat_conversation(DataSnapshot dataSnapshot) {
+        mVibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE); // On Create Vibrator Getting Service
 
         Iterator i = dataSnapshot.getChildren().iterator();
 
         while (i.hasNext()){
-            if (ad.showName() == ad.showName())
+
             chat_msg = (String) ((DataSnapshot)i.next()).getValue();
             chat_user_name = (String) ((DataSnapshot)i.next()).getValue();
+
             chat_conversation.append(chat_user_name +" : "+chat_msg +" \n");
+            mVibrator.vibrate(300); // On click Vibrate
         }
 
 
