@@ -4,24 +4,34 @@
 
     <item
         android:id="@+id/Add_room"
-        android:title="Add Room" />
+        android:title="Add Room"
+        android:icon="@drawable/addroom" />
 
     <item
         android:id="@+id/change_email_button"
-        android:title="@string/change_email" />
-
-    <item android:id="@+id/change_password_button"
-        android:title="@string/change_password" />
+        android:title="@string/change_email"
+        android:icon="@drawable/email"/>
 
     <item android:id="@+id/sending_pass_reset_button"
-        android:title="@string/send_password_reset_email" />
+        android:title="@string/send_password_reset_email"
+        android:icon="@drawable/email"/>
 
-    <item android:id="@+id/remove_user_button"
-        android:title="@string/remove_user" />
+    <item android:id="@+id/change_password_button"
+        android:title="@string/change_password"
+        android:icon="@drawable/lockk"/>
 
-    <item android:id="@+id/sign_out"
-        android:title="@string/btn_sign_out" />
 
     <item android:id="@+id/geo_loc"
-        android:title="Geo Location"/>
+        android:title="Geo Location"
+        android:icon="@drawable/loc"/>
+
+    <item android:id="@+id/remove_user_button"
+        android:title="@string/remove_user"
+        android:icon="@drawable/remove"/>
+
+    <item android:id="@+id/sign_out"
+        android:title="@string/btn_sign_out"
+        android:icon="@drawable/singout"/>
+
+
     </menu>
