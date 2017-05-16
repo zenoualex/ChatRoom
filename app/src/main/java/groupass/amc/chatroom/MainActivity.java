@@ -189,7 +189,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
-                    name = input_field.getText().toString();
+                    if (input_field.getText().length() <=1){
+                        Toast.makeText(MainActivity.this, "Please enter some NickName", Toast.LENGTH_LONG).show();
+                        return;
+                    }else{
+                        name = input_field.getText().toString();
+                    }
+
                 }
             });
             builder.show();
@@ -198,6 +204,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             return;
     }
     public String showName(){
+        return name;
+    }
+
+    public String getName(){
         return name;
     }
 

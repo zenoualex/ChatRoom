@@ -27,8 +27,7 @@
         android:id="@+id/scrollView"
         android:layout_above="@+id/btn_send"
         android:layout_alignRight="@+id/btn_send"
-        android:layout_alignEnd="@+id/btn_send"
-        android:layout_alignParentTop="true">
+        android:layout_alignEnd="@+id/btn_send">
 
         <TextView
             android:id="@+id/textView"
