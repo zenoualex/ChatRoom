@@ -189,11 +189,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
-                    if (input_field.getText() == null){
-                        return;
-                    } else {
-                        name = input_field.getText().toString();
-                    }
+                    name = input_field.getText().toString();
                 }
             });
             builder.show();
@@ -201,7 +197,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         else
             return;
     }
-
     public String showName(){
         return name;
     }

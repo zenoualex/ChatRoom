@@ -1,9 +1,7 @@
 package groupass.amc.chatroom;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
@@ -59,6 +57,7 @@ public class AddRoom extends AppCompatActivity {
                 Map<String, Object> map = new HashMap<String, Object>();
                 map.put(room_name.getText().toString(), "");
                 root.updateChildren(map);
+                room_name.getText().clear();
 
             }
         });
