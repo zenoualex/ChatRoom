@@ -54,7 +54,6 @@ public class GeoLoc extends AppCompatActivity implements GoogleApiClient.Connect
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.geo_loc);
-        ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
         mLatitudeTextView = (TextView) findViewById((R.id.latitude_textview));
         mLongitudeTextView = (TextView) findViewById((R.id.longitude_textview));
         Updateme = (Button) findViewById(R.id.updateme);

@@ -27,7 +27,9 @@
             android:id="@+id/content_frame"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="#ffffff" />
+            android:background="#ffffff" >
+
+        </FrameLayout>
 
     </android.support.design.widget.AppBarLayout>
 
@@ -39,8 +41,24 @@
         android:paddingLeft="@dimen/activity_horizontal_margin"
         android:paddingRight="@dimen/activity_horizontal_margin"
         android:paddingTop="@dimen/activity_vertical_margin"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:weightSum="1">
 
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.34"
+            app:srcCompat="@drawable/cartoon" />
+
+        <TextView
+            android:id="@+id/welcome"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.34"
+            android:paddingTop="80dp"
+            android:textSize="24sp" />
 
     </LinearLayout>
 

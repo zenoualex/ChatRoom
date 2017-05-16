@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
     android:background="@drawable/quz">
 
     <Button
@@ -13,42 +14,45 @@
         android:layout_alignParentRight="true"
         android:text="Send" />
 
-    <EditText
-        android:layout_gravity="center"
-        android:layout_width="240sp"
-        android:layout_height="10sp"
-        android:id="@+id/msg_input"
-        android:hint="@string/type_message"
-        android:inputType="textEmailAddress"
-        android:layout_alignParentBottom="true"
-        android:layout_below="@+id/scrollView"
-        android:layout_toStartOf="@+id/btn_send" />
-
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/scrollView"
-        android:layout_above="@+id/btn_send"
-        android:layout_alignRight="@+id/btn_send"
-        android:layout_alignEnd="@+id/btn_send">
-
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:layout_marginTop="1dp"
-            android:inputType="textMultiLine"
-            android:padding="4dp"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
-    </ScrollView>
-
     <Button
         android:id="@+id/button3"
         android:layout_width="63sp"
         android:layout_height="47sp"
-        android:drawableBottom="@drawable/ic_attach_dp"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:drawableBottom="@drawable/ic_attach_dp" />
+
+    <EditText
+        android:id="@+id/msg_input"
+        android:layout_width="240sp"
+        android:layout_height="10sp"
+        android:layout_alignParentBottom="true"
+        android:layout_below="@+id/scrollView"
+        android:layout_gravity="center"
+        android:layout_toStartOf="@+id/btn_send"
+        android:hint="@string/type_message"
+        android:inputType="textEmailAddress" />
+
+    <ScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/btn_send"
+        android:layout_alignEnd="@+id/btn_send"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignRight="@+id/btn_send">
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentStart="true"
+            android:padding="15dp"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+    </ScrollView>
+
 
 </RelativeLayout>
