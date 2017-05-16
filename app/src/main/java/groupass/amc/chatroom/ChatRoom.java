@@ -12,7 +12,10 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.Contacts.People;
 import android.provider.ContactsContract;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -66,8 +69,7 @@ public class ChatRoom  extends AppCompatActivity{
         input_msg = (EditText) findViewById(R.id.msg_input);
         chat_conversation = (TextView) findViewById(R.id.textView);
         btn_attach = (Button) findViewById(R.id.button3);
-
-
+        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_CONTACTS}, 1);
         room_name = getIntent().getExtras().get("room_name").toString();
         setTitle(" Room - "+room_name);
         root = FirebaseDatabase.getInstance().getReference().child(room_name);
@@ -92,6 +94,7 @@ public class ChatRoom  extends AppCompatActivity{
         btn_attach.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 Intent intent = new Intent(Intent.ACTION_PICK);
                 intent.setType(ContactsContract.Contacts.CONTENT_TYPE);
                 startActivityForResult(intent, CHOOSE_CONTACTS);
@@ -152,6 +155,7 @@ public class ChatRoom  extends AppCompatActivity{
         }
 
     }
+
 
     private String chat_msg,chat_user_name;
 
