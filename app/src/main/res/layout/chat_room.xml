@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent">
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:background="@drawable/quz">
 
     <Button
         android:id="@+id/btn_send"
@@ -17,6 +18,8 @@
         android:layout_width="240sp"
         android:layout_height="10sp"
         android:id="@+id/msg_input"
+        android:hint="@string/type_message"
+        android:inputType="textEmailAddress"
         android:layout_alignParentBottom="true"
         android:layout_below="@+id/scrollView"
         android:layout_toStartOf="@+id/btn_send" />
@@ -31,8 +34,8 @@
 
         <TextView
             android:id="@+id/textView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_gravity="bottom"
             android:layout_marginTop="1dp"
             android:inputType="textMultiLine"

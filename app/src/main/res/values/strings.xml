@@ -29,7 +29,10 @@
     <string name="lbl_forgot_password">Forgot password?</string>
     <string name="forgot_password_msg">We just need your registered Email Id to sent you password reset instructions.</string>
     <string name="open">Open</string>
+    <string name="nav">Frog Chat Menu</string>
     <string name="close">Close</string>
+    <string name="type">Type name of room</string>
+    <string name="type_message">Type message here</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
