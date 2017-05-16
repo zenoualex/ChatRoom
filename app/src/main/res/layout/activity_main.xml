@@ -49,7 +49,11 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         app:menu="@menu/navigation"
-        android:layout_gravity="left|start">
+        android:background="#FFFFFF"
+        android:layout_gravity="left|start"
+        android:fitsSystemWindows="true"
+        app:itemTextColor="#000000"
+        app:headerLayout="@layout/nav_main">
 
     </android.support.design.widget.NavigationView>
 
