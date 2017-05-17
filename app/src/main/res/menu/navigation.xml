@@ -14,7 +14,7 @@
         android:icon="@drawable/email"/>
 
     <item android:id="@+id/sending_pass_reset_button"
-        android:title="@string/send_password_reset_email"
+        android:title="Reset Password"
         android:icon="@drawable/email"/>
 
     <item android:id="@+id/change_password_button"
