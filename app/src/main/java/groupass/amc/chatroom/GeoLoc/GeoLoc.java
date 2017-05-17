@@ -47,6 +47,7 @@ public class GeoLoc extends AppCompatActivity implements GoogleApiClient.Connect
         mLongitudeTextView = (TextView) findViewById((R.id.longitude_textview));
         Button updateme = (Button) findViewById(R.id.updateme);
         Button copy = (Button) findViewById(R.id.copy);
+        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
         mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .addConnectionCallbacks(this)
                 .addOnConnectionFailedListener(this)

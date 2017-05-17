@@ -8,6 +8,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
@@ -46,9 +47,9 @@ public class ChatRoom extends AppCompatActivity {
         input_msg = (EditText) findViewById(R.id.msg_input);
         chat_conversation = (TextView) findViewById(R.id.textView);
         Button btn_attach = (Button) findViewById(R.id.button3);
-
+        ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.READ_CONTACTS}, 1);
         String room_name = getIntent().getExtras().get("room_name").toString();
-        this.setTitle(" Room - " + room_name);
+        setTitle(" Room - " + room_name);
         root = FirebaseDatabase.getInstance().getReference().child(room_name);
 
 
@@ -126,28 +127,23 @@ public class ChatRoom extends AppCompatActivity {
         String name1 = c.getString(name);
         input_msg.setText("Number: " + number1 + " Name:" + name1);
         Toast.makeText(this, name1 + " has number " + number1, Toast.LENGTH_LONG).show();
-
-
     }
 
     private void append_chat_conversation(DataSnapshot dataSnapshot) {
         Vibrator mVibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
         Iterator i = dataSnapshot.getChildren().iterator();
-        int myColor = Color.BLUE;
         while (i.hasNext()) {
 
             String chat_msg = (String) ((DataSnapshot) i.next()).getValue();
             String chat_user_name = (String) ((DataSnapshot) i.next()).getValue();
-            if (chat_user_name == ad.getName()) {
+            if (chat_user_name.equals( ad.getName())) {
                 chat_conversation.append(chat_user_name + " : " + chat_msg + " \n");
             } else {
-                chat_conversation.append(chat_user_name + " : " + chat_msg + " \n");
-                mVibrator.vibrate(300); // On click Vibrate
+                chat_conversation.append( chat_user_name + " : " + chat_msg + " \n");
+                mVibrator.vibrate(300);
             }
         }
 
-
     }
-
 
 }
