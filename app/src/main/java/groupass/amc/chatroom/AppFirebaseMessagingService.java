@@ -28,22 +28,18 @@ public class AppFirebaseMessagingService extends FirebaseMessagingService {
         Log.d(TAG, "FROM:" + remoteMessage.getFrom());
 
         //Check if the message contains data
-        if(remoteMessage.getData().size() > 0) {
+        if (remoteMessage.getData().size() > 0) {
             Log.d(TAG, "Message data: " + remoteMessage.getData());
         }
 
         //Check if the message contains notification
 
-        if(remoteMessage.getNotification() != null) {
+        if (remoteMessage.getNotification() != null) {
             Log.d(TAG, "Mesage body:" + remoteMessage.getNotification().getBody());
             sendNotification(remoteMessage.getNotification().getBody());
         }
     }
 
-    /**
-     * Dispay the notification
-     * @param body
-     */
     private void sendNotification(String body) {
 
         Intent intent = new Intent(this, MainActivity.class);
@@ -61,7 +57,7 @@ public class AppFirebaseMessagingService extends FirebaseMessagingService {
                 .setSound(notificationSound)
                 .setContentIntent(pendingIntent);
 
-        NotificationManager notificationManager = (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
+        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         notificationManager.notify(0 /*ID of notification*/, notifiBuilder.build());
     }
 }

@@ -26,11 +26,7 @@ import java.util.Set;
 
 
 public class AddRoom extends AppCompatActivity {
-
-    private Button add_room;
     private EditText room_name;
-
-    private ListView listView;
     private ArrayAdapter<String> arrayAdapter;
     private ArrayList<String> list_of_rooms = new ArrayList<>();
     private DatabaseReference root = FirebaseDatabase.getInstance().getReference().getRoot();
@@ -39,17 +35,12 @@ public class AddRoom extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_room);
-
-        add_room = (Button) findViewById(R.id.btn_add_room);
+        Button add_room = (Button) findViewById(R.id.btn_add_room);
         room_name = (EditText) findViewById(R.id.room_name_edittext);
-        listView = (ListView) findViewById(R.id.listView);
-
+        ListView listView = (ListView) findViewById(R.id.listView);
         arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, list_of_rooms);
-
         listView.setAdapter(arrayAdapter);
-
-
-
+        //Button Add Room
         add_room.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -84,7 +75,7 @@ public class AddRoom extends AppCompatActivity {
 
             }
         });
-
+        //
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {

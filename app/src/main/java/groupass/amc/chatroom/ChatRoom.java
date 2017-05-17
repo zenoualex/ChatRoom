@@ -130,7 +130,6 @@ public class ChatRoom extends AppCompatActivity {
 
     }
 
-
     private void append_chat_conversation(DataSnapshot dataSnapshot) {
         Vibrator mVibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
         Iterator i = dataSnapshot.getChildren().iterator();

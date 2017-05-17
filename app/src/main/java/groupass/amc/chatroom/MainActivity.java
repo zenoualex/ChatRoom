@@ -38,12 +38,10 @@ import layout.ResetPassword;
 
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
-    private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mToggle;
     private FirebaseAuth.AuthStateListener authListener;
     private FirebaseAuth auth;
     public static String name;
-    private NavigationView nvDrawer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,22 +51,21 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         //Asking For Permitions
         ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.READ_CONTACTS}, 1);
         ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+        //
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle(getString(R.string.app_name));
         setSupportActionBar(toolbar);
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
+        DrawerLayout mDrawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
         mToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.open, R.string.close);
-        nvDrawer = (NavigationView) findViewById(R.id.nvView);
+        NavigationView nvDrawer = (NavigationView) findViewById(R.id.nvView);
         TextView Welcome = (TextView) findViewById(R.id.welcome);
         Welcome.setText("Welcome to Frog Chat \n" + user);
         mDrawerLayout.addDrawerListener(mToggle);
         mToggle.syncState();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nvView);
-        navigationView.setNavigationItemSelectedListener(this);
+        nvDrawer.setNavigationItemSelectedListener(this);
         request_user_name();
         auth = FirebaseAuth.getInstance();
-
         //Check if user is Online
         authListener = new FirebaseAuth.AuthStateListener() {
             @Override
@@ -80,10 +77,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 }
             }
         };
-
-
     }
-
     private void displaySelectedScreen(int itemId) {
         final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         TextView Welcome = (TextView) findViewById(R.id.welcome);
@@ -189,9 +183,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if (authListener != null) {
             auth.removeAuthStateListener(authListener);
         }
-
     }
-
     public void request_user_name() {
         if (name == null) {
             final AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -214,7 +206,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         } else
             return;
     }
-
     public String showName() {
         return name;
     }
