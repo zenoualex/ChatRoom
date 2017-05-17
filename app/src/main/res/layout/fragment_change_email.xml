@@ -2,8 +2,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="layout.ChangeEmail"
-    android:background="@drawable/quz">
+    android:background="@drawable/quz"
+    tools:context="layout.ChangeEmail">
 
 
     <LinearLayout
@@ -42,7 +42,7 @@
             android:background="@drawable/shapeinside"
             android:text="@string/btn_change"
             android:textColor="@android:color/white"
-            android:textStyle="bold"/>
+            android:textStyle="bold" />
 
     </LinearLayout>
 

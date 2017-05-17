@@ -51,19 +51,6 @@
             android:label="location_awareness"
             android:theme="@style/AppTheme.NoActionBar" />
 
-        <service
-            android:name=".AppFirebaseInstanceIDService">
-            <intent-filter>
-                <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
-            </intent-filter>
-        </service>
-
-        <service
-            android:name=".AppFirebaseMessagingService">
-            <intent-filter>
-                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
-            </intent-filter>
-        </service>
         <uses-permission android:name="android.permission.INTERNET" />
     </application>
 

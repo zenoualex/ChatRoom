@@ -10,6 +10,11 @@ import android.provider.ContactsContract;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.SpannableStringBuilder;
+import android.text.Spanned;
+import android.text.style.ForegroundColorSpan;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -34,7 +39,7 @@ public class ChatRoom extends AppCompatActivity {
     private EditText input_msg;
     private TextView chat_conversation;
     private DatabaseReference root;
-    private String temp_key;
+    private String message_key;
 
     final MainActivity ad = new MainActivity();
 
@@ -42,17 +47,18 @@ public class ChatRoom extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.chat_room);
-
+        //Declaring Variables etc.
         Button btn_send_msg = (Button) findViewById(R.id.btn_send);
         input_msg = (EditText) findViewById(R.id.msg_input);
         chat_conversation = (TextView) findViewById(R.id.textView);
         Button btn_attach = (Button) findViewById(R.id.button3);
+        //Asking permitions to enter Phones Contact information
         ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.READ_CONTACTS}, 1);
         String room_name = getIntent().getExtras().get("room_name").toString();
         setTitle(" Room - " + room_name);
         root = FirebaseDatabase.getInstance().getReference().child(room_name);
 
-
+        //Works with Mapping the first input will be the name and second will be the message. Before all that it is pussing a uinique Key for each message and user.
         btn_send_msg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -60,9 +66,9 @@ public class ChatRoom extends AppCompatActivity {
                     Toast.makeText(ChatRoom.this, "Please add some Text", Toast.LENGTH_LONG).show();
                 } else {
                     Map<String, Object> map = new HashMap<String, Object>();
-                    temp_key = root.push().getKey();
+                    message_key = root.push().getKey();
                     root.updateChildren(map);
-                    DatabaseReference message_root = root.child(temp_key);
+                    DatabaseReference message_root = root.child(message_key);
                     Map<String, Object> map2 = new HashMap<String, Object>();
                     map2.put("name", ad.showName());
                     map2.put("msg", input_msg.getText().toString());
@@ -71,6 +77,7 @@ public class ChatRoom extends AppCompatActivity {
                 }
             }
         });
+        //Generating an action when the Attack button is pressed. The action is to open the contact.
         btn_attach.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -113,37 +120,40 @@ public class ChatRoom extends AppCompatActivity {
         });
 
     }
-
+    //While the contact menu is open, the person is able to pick one contact and then it pastes to the input field
     public void onActivityResult(int reqCode, int resultCode, Intent data) {
         super.onActivityResult(reqCode, resultCode, data);
         Uri contactUri = data.getData();
-        String[] projection = {ContactsContract.CommonDataKinds.Phone.NUMBER, ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME};
+        String[] rcontact = {ContactsContract.CommonDataKinds.Phone.NUMBER, ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME};
         Cursor c = getContentResolver()
-                .query(contactUri, projection, null, null, null);
+                .query(contactUri, rcontact, null, null, null);
         c.moveToFirst();
-        int name = c.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER);
-        int number = c.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME);
-        String number1 = c.getString(number);
-        String name1 = c.getString(name);
-        input_msg.setText("Number: " + number1 + " Name:" + name1);
-        Toast.makeText(this, name1 + " has number " + number1, Toast.LENGTH_LONG).show();
+        int contact_name = c.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER);
+        int contact_number = c.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME);
+        String contact_number1 = c.getString(contact_number);
+        String contact_name1 = c.getString(contact_name);
+        input_msg.setText("Number: " + contact_number1 + " Name:" + contact_name1);
+        Toast.makeText(this, contact_name1 + " has number " + contact_number1, Toast.LENGTH_LONG).show();
     }
-
+    //It load all previus Conversation in each room. Also Updates the chat with all new messages using dataSnapshots
+    //Firebase uses Snapshots to show its data.
+    //And with a loop we display all messages based on the Unique Keys
     private void append_chat_conversation(DataSnapshot dataSnapshot) {
         Vibrator mVibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
         Iterator i = dataSnapshot.getChildren().iterator();
         while (i.hasNext()) {
-
             String chat_msg = (String) ((DataSnapshot) i.next()).getValue();
             String chat_user_name = (String) ((DataSnapshot) i.next()).getValue();
             if (chat_user_name.equals( ad.getName())) {
-                chat_conversation.append(chat_user_name + " : " + chat_msg + " \n");
+                Spannable Chatme = new SpannableString(chat_user_name + " : " + chat_msg + " \n");
+                Chatme.setSpan(new ForegroundColorSpan(Color.BLUE), 0, chat_user_name.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                chat_conversation.append(Chatme);
+
             } else {
                 chat_conversation.append( chat_user_name + " : " + chat_msg + " \n");
-                mVibrator.vibrate(300);
+                mVibrator.vibrate(200);
             }
         }
-
     }
 
 }

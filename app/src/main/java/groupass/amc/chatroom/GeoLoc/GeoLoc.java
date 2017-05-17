@@ -1,6 +1,4 @@
-package groupass.amc.chatroom.GeoLoc; /**
- * Created by Anastos on 5/14/2017.
- */
+package groupass.amc.chatroom.GeoLoc;
 
 import android.Manifest;
 import android.content.ClipData;
@@ -8,7 +6,6 @@ import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.location.Location;
-import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
@@ -23,7 +20,6 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.maps.model.LatLng;
 
 
 import groupass.amc.chatroom.R;
@@ -31,13 +27,11 @@ import groupass.amc.chatroom.R;
 
 public class GeoLoc extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, com.google.android.gms.location.LocationListener {
 
-    private static final String TAG = "MainActivity";
+    private static final String TAG = "Frog Chat";
     private TextView mLatitudeTextView;
     private TextView mLongitudeTextView;
     private GoogleApiClient mGoogleApiClient;
-    private com.google.android.gms.location.LocationListener listener;
 
-    private LocationManager locationManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +41,7 @@ public class GeoLoc extends AppCompatActivity implements GoogleApiClient.Connect
         mLongitudeTextView = (TextView) findViewById((R.id.longitude_textview));
         Button updateme = (Button) findViewById(R.id.updateme);
         Button copy = (Button) findViewById(R.id.copy);
+        //Asking for Permisions to acces to Location awarness
         ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
         mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .addConnectionCallbacks(this)
@@ -54,7 +49,6 @@ public class GeoLoc extends AppCompatActivity implements GoogleApiClient.Connect
                 .addApi(LocationServices.API)
                 .build();
 
-        LocationManager mLocationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
 
         updateme.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -63,7 +57,7 @@ public class GeoLoc extends AppCompatActivity implements GoogleApiClient.Connect
 
             }
         });
-
+        //Copying Cordinates to ClipBoard
         copy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -80,16 +74,14 @@ public class GeoLoc extends AppCompatActivity implements GoogleApiClient.Connect
         });
     }
 
+    //On entering to GeoLoc Checking for permitions and if are enable it updates the cordinates with the most recent one's
     @Override
     public void onConnected(Bundle bundle) {
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             return;
         }
-
         startLocationUpdates();
-
         Location mLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
-
         if (mLocation == null) {
             startLocationUpdates();
         }
@@ -129,6 +121,7 @@ public class GeoLoc extends AppCompatActivity implements GoogleApiClient.Connect
         }
     }
 
+    //Updating Location (Longitude, Latitude every 2 Seconds
     protected void startLocationUpdates() {
         long UPDATE_INTERVAL = 2 * 1000;
         long FASTEST_INTERVAL = 2000;
@@ -141,9 +134,9 @@ public class GeoLoc extends AppCompatActivity implements GoogleApiClient.Connect
         }
         LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient,
                 mLocationRequest, this);
-        Log.d("reque", "--->>>>");
     }
 
+    //If the person has moved from hi's Previous location then the device through this code is aware of that and update the fields with the latest ones.
     @Override
     public void onLocationChanged(Location location) {
 
@@ -153,8 +146,6 @@ public class GeoLoc extends AppCompatActivity implements GoogleApiClient.Connect
         mLatitudeTextView.setText(String.valueOf(location.getLatitude()));
         mLongitudeTextView.setText(String.valueOf(location.getLongitude()));
         Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
-        // You can now create a LatLng Object for use with maps
-        LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
     }
 
 }

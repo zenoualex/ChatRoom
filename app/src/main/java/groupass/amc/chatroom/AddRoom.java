@@ -35,12 +35,13 @@ public class AddRoom extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_room);
+        //Declaring Variables etc.
         Button add_room = (Button) findViewById(R.id.btn_add_room);
         room_name = (EditText) findViewById(R.id.room_name_edittext);
         ListView listView = (ListView) findViewById(R.id.listView);
         arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, list_of_rooms);
         listView.setAdapter(arrayAdapter);
-        //Button Add Room
+        //Button Add Room with maping add in a listview each Room that a person deside to create
         add_room.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -52,7 +53,7 @@ public class AddRoom extends AppCompatActivity {
 
             }
         });
-
+        //Using Event listener when it sees that a new room has been added its updates the list view in real time.
         root.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -75,7 +76,7 @@ public class AddRoom extends AppCompatActivity {
 
             }
         });
-        //
+        // When a user press a Room it is transfering him to the ChatRoom Page.
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {

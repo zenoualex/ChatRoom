@@ -1,13 +1,10 @@
 package groupass.amc.chatroom;
 
-import android.*;
-import android.Manifest;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
@@ -47,6 +44,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        //Declaring Variables etc.
         final String user = FirebaseAuth.getInstance().getCurrentUser().getEmail();
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle(getString(R.string.app_name));
@@ -74,6 +72,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
         };
     }
+    //Adding actions OnSelecty to the left navigation bar. Works with Fragments ( When a fragments is choosen it changes the background with the new one) and Intents
     private void displaySelectedScreen(int itemId) {
         final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         TextView Welcome = (TextView) findViewById(R.id.welcome);
@@ -168,6 +167,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     @Override
+    //sign in method
     public void onStart() {
         super.onStart();
         auth.addAuthStateListener(authListener);
@@ -180,6 +180,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             auth.removeAuthStateListener(authListener);
         }
     }
+    //Displayes the windows to input your disired Nickname
     public void request_user_name() {
         if (name == null) {
             final AlertDialog.Builder builder = new AlertDialog.Builder(this);
