@@ -1,5 +1,6 @@
 package groupass.amc.chatroom;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
@@ -10,6 +11,7 @@ import android.provider.ContactsContract;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
@@ -55,10 +57,9 @@ public class ChatRoom extends AppCompatActivity {
         //Asking permitions to enter Phones Contact information
         ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.READ_CONTACTS}, 1);
         String room_name = getIntent().getExtras().get("room_name").toString();
-        setTitle(" Room - " + room_name);
         root = FirebaseDatabase.getInstance().getReference().child(room_name);
 
-        //Works with Mapping the first input will be the name and second will be the message. Before all that it is pussing a uinique Key for each message and user.
+        //Works with Mapping the first input will be the name and second will be the message. Before all that it is pushing a uinique Key for each message and user.
         btn_send_msg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -123,18 +124,24 @@ public class ChatRoom extends AppCompatActivity {
     //While the contact menu is open, the person is able to pick one contact and then it pastes to the input field
     public void onActivityResult(int reqCode, int resultCode, Intent data) {
         super.onActivityResult(reqCode, resultCode, data);
-        Uri contactUri = data.getData();
-        String[] rcontact = {ContactsContract.CommonDataKinds.Phone.NUMBER, ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME};
-        Cursor c = getContentResolver()
-                .query(contactUri, rcontact, null, null, null);
-        c.moveToFirst();
-        int contact_name = c.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER);
-        int contact_number = c.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME);
-        String contact_number1 = c.getString(contact_number);
-        String contact_name1 = c.getString(contact_name);
-        input_msg.setText("Number: " + contact_number1 + " Name:" + contact_name1);
-        Toast.makeText(this, contact_name1 + " has number " + contact_number1, Toast.LENGTH_LONG).show();
-    }
+        if (reqCode != Activity.RESULT_OK && data != null) {
+            Uri contactUri = data.getData();
+            String[] rcontact = {ContactsContract.CommonDataKinds.Phone.NUMBER, ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME};
+                Cursor c = getContentResolver()
+                        .query(contactUri, rcontact, null, null, null);
+                c.moveToFirst();
+                int contact_name = c.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER);
+                int contact_number = c.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME);
+                String contact_number1 = c.getString(contact_number);
+                String contact_name1 = c.getString(contact_name);
+                input_msg.setText("Number: " + contact_number1 + " Name:" + contact_name1);
+                Toast.makeText(this, contact_name1 + " has number " + contact_number1, Toast.LENGTH_LONG).show();
+            }
+            else{
+                Toast.makeText(this, " This Device has no Contacs ", Toast.LENGTH_LONG).show();
+                finish();
+            }
+        }
     //It load all previus Conversation in each room. Also Updates the chat with all new messages using dataSnapshots
     //Firebase uses Snapshots to show its data.
     //And with a loop we display all messages based on the Unique Keys
